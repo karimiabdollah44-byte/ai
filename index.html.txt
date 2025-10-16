@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="مراقبت سالمندان">
+    <meta name="description" content="سامانه جامع مراقبت از سالمندان">
+    
+    <title>اپلیکیشن مراقبت جامع سالمندان</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogItin2b7ZhNuM2qnbjNi02YYg2YXYsdin2YLYqNiqINis2KfZhdi5INiz2KfZhNmF2YbYr9in2YYiLAogICJzaG9ydF9uYW1lIjogItmF2LHYp9mC2KjYqiDYs9in2YTZhdmG2K/Yp9mGIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmZmZmZmYiLAogICJ0aGVtZV9jb2xvciI6ICIjNENBRjUwIiwKICAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhkQ2IzZzlJakFnTUNBMU1USWdOVEV5SWo0OGNtVmpkQ0IzYVdSMGFEMGlOVEV5SWlCb1pXbG5hSFE5SWpVeE1pSWdabWxzYkQwaUl6UkRRVVkxTUNJdlBqeDBaWGgwSUhnOUlqSTFOaUlnZVQwaU1qVTJJaUJtYjI1MExYTnBlbVU5SWpFd01DSWdkR1Y0ZEMxaGJtTm9iM0k5SW0xcFpHUnNaU0lnWm1sc2JEMGlJMlptWmlJK2YzMDhMM1JsZUhRK1BDOXpkbWMrIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Vazir', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            direction: rtl;
+            text-align: right;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .profile-summary {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .navigation {
+            background: #f5f5f5;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-tabs {
+            display: flex;
+            padding: 0 10px;
+            gap: 5px;
+            min-width: min-content;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            padding: 10px 15px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 0.85em;
+            transition: all 0.3s;
+            flex-shrink: 0;
+            touch-action: manipulation;
+        }
+
+        .nav-tab.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .nav-tab:active {
+            transform: scale(0.95);
+        }
+
+        .content {
+            padding: 15px;
+            min-height: 400px;
+            padding-bottom: 80px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76,175,80,0.3);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+            touch-action: manipulation;
+        }
+
+        .checkbox-item:active {
+            transform: scale(0.98);
+        }
+
+        .checkbox-item.checked {
+            background: #e8f5e8;
+            border-color: #4CAF50;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin: 5px;
+            font-family: inherit;
+            touch-action: manipulation;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #FF9800;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .reminder-box {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .reminder-active {
+            background: #d4edda;
+            border-color: #4CAF50;
+        }
+
+        .scenario-box {
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border-right: 4px solid #2196F3;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .health-score {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .daily-activities {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+
+        .activity-card:active {
+            transform: scale(0.95);
+        }
+
+        .activity-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(45deg); }
+            100% { filter: hue-rotate(0deg); }
+        }
+
+        .emergency-button {
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(244,67,54,0.4);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+            touch-action: manipulation;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            left: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateY(-150%);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+
+        .radio-item:active {
+            transform: scale(0.98);
+        }
+
+        .radio-item.selected {
+            background: #e8f5e8;
+            border-color: #4CAF50;
+        }
+
+        .saved-profiles {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .profile-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            touch-action: manipulation;
+        }
+
+        .profile-item:active {
+            transform: scale(0.98);
+        }
+
+        .profile-item-active {
+            border-color: #4CAF50;
+            background: #e8f5e8;
+        }
+
+        .delete-profile {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+
+        .delete-profile:active {
+            transform: scale(0.9);
+        }
+
+        .gradient-icon-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-icon-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-icon-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-icon-4 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-icon-5 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-icon-6 {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .install-prompt {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+            z-index: 1001;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+        }
+
+        .install-prompt.show {
+            transform: translateY(0);
+        }
+
+        .install-prompt button {
+            margin: 10px 5px;
+        }
+
+        @media (max-width: 400px) {
+            .header h1 {
+                font-size: 1.1em;
+            }
+            
+            .nav-tab {
+                font-size: 0.8em;
+                padding: 8px 12px;
+            }
+            
+            .content {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>🏥 سامانه مراقبت جامع سالمندان</h1>
+            <div class="profile-summary" id="profileSummary">
+                <div>👤 <span id="userName">کاربر محترم</span></div>
+                <div>📊 وضعیت سلامت: <span id="healthStatus">عالی</span></div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="showSection('profile')">🏠 پروفایل</div>
+                <div class="nav-tab" onclick="showSection('saved')">💾 ذخیره</div>
+                <div class="nav-tab" onclick="showSection('activities')">📋 فعالیت</div>
+                <div class="nav-tab" onclick="showSection('nutrition')">🍎 تغذیه</div>
+                <div class="nav-tab" onclick="showSection('mental')">🧠 روان</div>
+                <div class="nav-tab" onclick="showSection('safety')">🛡️ ایمنی</div>
+                <div class="nav-tab" onclick="showSection('medical')">👨‍⚕️ پزشکی</div>
+                <div class="nav-tab" onclick="showSection('reminders')">⏰ یادآور</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- بخش پروفایل -->
+            <div id="profile" class="section active">
+                <h2>📝 اطلاعات شناسنامه‌ای</h2>
+                
+                <div class="form-group">
+                    <label>نام و نام خانوادگی:</label>
+                    <input type="text" class="form-control" id="fullName" placeholder="نام کامل خود را وارد کنید">
+                </div>
+
+                <div class="form-group">
+                    <label>تاریخ تولد:</label>
+                    <input type="date" class="form-control" id="birthDate">
+                </div>
+
+                <div class="form-group">
+                    <label>جنسیت:</label>
+                    <div class="radio-group">
+                        <div class="radio-item" onclick="selectRadio(this, 'gender', 'female')">
+                            <input type="radio" name="gender" value="female">
+                            <span>زن</span>
+                        </div>
+                        <div class="radio-item" onclick="selectRadio(this, 'gender', 'male')">
+                            <input type="radio" name="gender" value="male">
+                            <span>مرد</span>
+                        </div>
+                        <div class="radio-item" onclick="selectRadio(this, 'gender', 'other')">
+                            <input type="radio" name="gender" value="other">
+                            <span>سایر</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>بیماری‌های مزمن:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" id="hypertension">
+                            <span>فشار خون بالا</span>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" id="diabetes">
+                            <span>دیابت</span>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" id="osteoporosis">
+                            <span>پوکی استخوان</span>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" id="heart">
+                            <span>بیماری قلبی</span>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" id="stroke">
+                            <span>سکته یا TIA</span>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" id="alzheimer">
+                            <span>آلزایمر</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="health-score">
+                    <div class="score-circle">
+                        <span id="healthScoreValue">85</span>%
+                    </div>
+                    <h3>نمای کلی سلامت</h3>
+                    <p>وضعیت کلی سلامت شما بر اساس اطلاعات وارد شده</p>
+                </div>
+
+                <button class="btn btn-primary" onclick="saveProfile()">💾 ذخیره اطلاعات</button>
+                <button class="btn btn-secondary" onclick="clearForm()">🔄 پاک کردن فرم</button>
+            </div>
+
+            <!-- بخش ذخیره‌شده‌ها -->
+            <div id="saved" class="section">
+                <h2>💾 پروفایل‌های ذخیره‌شده</h2>
+                
+                <div class="saved-profiles" id="savedProfilesList">
+                    <p style="text-align: center; color: #666;">در حال بارگذاری...</p>
+                </div>
+
+                <button class="btn btn-primary" onclick="showSection('profile')">➕ ایجاد پروفایل جدید</button>
+            </div>
+
+            <!-- بخش فعالیت‌های روزمره -->
+            <div id="activities" class="section">
+                <h2>📋 فعالیت‌های روزمره</h2>
+                
+                <div class="daily-activities">
+                    <div class="activity-card" onclick="showActivity('shower')">
+                        <span class="activity-icon gradient-icon-1">🚿</span>
+                        <div>استحمام</div>
+                        <div style="color: #4CAF50; font-weight: bold;">✓ انجام شده</div>
+                    </div>
+                    
+                    <div class="activity-card" onclick="showActivity('dress')">
+                        <span class="activity-icon gradient-icon-2">👕</span>
+                        <div>لباس پوشیدن</div>
+                        <div style="color: #FF9800; font-weight: bold;">⏳ در انتظار</div>
+                    </div>
+                    
+                    <div class="activity-card" onclick="showActivity('eat')">
+                        <span class="activity-icon gradient-icon-3">🍽️</span>
+                        <div>غذا خوردن</div>
+                        <div style="color: #4CAF50; font-weight: bold;">✓ انجام شده</div>
+                    </div>
+                    
+                    <div class="activity-card" onclick="showActivity('medicine')">
+                        <span class="activity-icon gradient-icon-4">💊</span>
+                        <div>مصرف دارو</div>
+                        <div style="color: #f44336; font-weight: bold;">✖ فراموش شده</div>
+                    </div>
+                    
+                    <div class="activity-card" onclick="showActivity('exercise')">
+                        <span class="activity-icon gradient-icon-5">🏃‍♂️</span>
+                        <div>تمرین ورزشی</div>
+                        <div style="color: #FF9800; font-weight: bold;">⏳ در انتظار</div>
+                    </div>
+                    
+                    <div class="activity-card" onclick="showActivity('phone')">
+                        <span class="activity-icon gradient-icon-6">📞</span>
+                        <div>تماس با خانواده</div>
+                        <div style="color: #4CAF50; font-weight: bold;">✓ انجام شده</div>
+                    </div>
+                </div>
+
+                <div class="scenario-box">
+                    <h4>📘 سناریو آموزشی - استحمام ایمن</h4>
+                    <p>آقای کریمی، ۷۲ساله، با نصب صندلی حمام و نوارهای ضد لغزش، استحمام ایمن‌تری داشت.</p>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%;"></div>
+                </div>
+                <p style="text-align: center;">پیشرفت امروز: ۷۵٪</p>
+            </div>
+
+            <!-- بخش تغذیه -->
+            <div id="nutrition" class="section">
+                <h2>🍎 برنامه غذایی و تغذیه</h2>
+
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                    <h3>🌅 صبحانه پیشنهادی</h3>
+                    <ul style="padding-right: 20px;">
+                        <li>نان سبوس‌دار + پنیر کم‌چرب</li>
+                        <li>چای بدون قند</li>
+                        <li>نصف سیب</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="addToMyPlan('breakfast')">➕ افزودن به برنامه من</button>
+                </div>
+
+                <div class="form-group">
+                    <label>مصرف آب روزانه (تعداد لیوان):</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button onclick="changeWaterCount(-1)" class="btn btn-secondary">-</button>
+                        <input type="number" id="waterCount" value="6" class="form-control" style="max-width: 80px; text-align: center;">
+                        <button onclick="changeWaterCount(1)" class="btn btn-secondary">+</button>
+                        <span>لیوان</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش سلامت روان -->
+            <div id="mental" class="section">
+                <h2>🧠 بهزیستی روانی و اجتماعی</h2>
+
+                <div class="health-score" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);">
+                    <div class="score-circle">
+                        <span>😊</span>
+                    </div>
+                    <h3>شاخص روحیه من</h3>
+                    <p>امتیاز هفتگی: ۷۸/۱۰۰</p>
+                </div>
+
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                    <h3>🎵 تمرین‌های آرامش</h3>
+                    <div class="daily-activities">
+                        <div class="activity-card" onclick="startRelaxation('breathing')">
+                            <span class="activity-icon gradient-icon-1">🌬️</span>
+                            <div>تمرین تنفس عمیق</div>
+                        </div>
+                        <div class="activity-card" onclick="startRelaxation('music')">
+                            <span class="activity-icon gradient-icon-2">🎼</span>
+                            <div>موسیقی آرام‌بخش</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش ایمنی -->
+            <div id="safety" class="section">
+                <h2>🛡️ ایمنی منزل و پیشگیری از حوادث</h2>
+
+                <div style="background: #fff8e1; border-radius: 10px; padding: 15px; margin: 15px 0;">
+                    <h3>📋 چک‌لیست ایمنی منزل</h3>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" id="lighting">
+                            <span>روشنایی مناسب راهروها</span>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" id="bathroom">
+                            <span>نوار ضدلغزش در حمام</span>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" id="handrails">
+                            <span>دستگیره کمکی نصب شده</span>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" id="carpets">
+                            <span>فرش‌های لغزنده برداشته شده</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش مراقبت پزشکی -->
+            <div id="medical" class="section">
+                <h2>👨‍⚕️ مراقبت پزشکی و پرستاری</h2>
+
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                    <h3>📅 تقویم مراقبت پزشکی</h3>
+                    <div class="daily-activities">
+                        <div class="activity-card" style="background: #e8f5e8;">
+                            <span class="activity-icon gradient-icon-1">👨‍⚕️</span>
+                            <div>ویزیت پزشک عمومی</div>
+                            <div style="color: #666; font-size: 12px;">فردا ساعت ۱۰</div>
+                        </div>
+                        <div class="activity-card" style="background: #fff3e0;">
+                            <span class="activity-icon gradient-icon-2">💉</span>
+                            <div>تزریق انسولین</div>
+                            <div style="color: #666; font-size: 12px;">امروز ساعت ۸</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش یادآورها -->
+            <div id="reminders" class="section">
+                <h2>⏰ یادآورها و برنامه‌ریزی</h2>
+
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                    <h3>📅 برنامه امروز</h3>
+                    
+                    <div class="reminder-box reminder-active">
+                        <h4>✅ انجام شده - صبحانه (۸:۰۰)</h4>
+                        <p>نان، پنیر، چای</p>
+                    </div>
+
+                    <div class="reminder-box">
+                        <h4>⏰ یادآور فعال - مصرف دارو (۱۲:۰۰)</h4>
+                        <p>قرص فشار خون + ویتامین D</p>
+                        <button class="btn btn-primary" onclick="markCompleted(this)">✓ انجام شد</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="emergency-button" onclick="emergency()">🚨</button>
+
+        <div id="notification" class="notification"></div>
+        
+        <!-- دکمه نصب PWA -->
+        <div id="installPrompt" class="install-prompt">
+            <h3>📱 نصب اپلیکیشن</h3>
+            <p>برای دسترسی آسان‌تر، این اپلیکیشن را روی صفحه اصلی موبایل خود نصب کنید</p>
+            <button class="btn btn-primary" onclick="installPWA()">✅ نصب کن</button>
+            <button class="btn btn-secondary" onclick="hideInstallPrompt()">بعداً</button>
+        </div>
+    </div>
+
+    <script>
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE_NAME = 'elderly-care-v1';
+                self.addEventListener('install', (event) => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME).then((cache) => {
+                            return cache.addAll(['/']);
+                        })
+                    );
+                });
+                
+                self.addEventListener('fetch', (event) => {
+                    event.respondWith(
+                        caches.match(event.request).then((response) => {
+                            return response || fetch(event.request);
+                        })
+                    );
+                });
+            `;
+            
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            
+            navigator.serviceWorker.register(swUrl)
+                .then(() => console.log('Service Worker registered'))
+                .catch(err => console.log('Service Worker registration failed:', err));
+        }
+
+        // PWA Install Prompt
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            setTimeout(() => {
+                document.getElementById('installPrompt').classList.add('show');
+            }, 2000);
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showNotification('اپلیکیشن در حال نصب است...', 'success');
+                    }
+                    deferredPrompt = null;
+                    hideInstallPrompt();
+                });
+            }
+        }
+
+        function hideInstallPrompt() {
+            document.getElementById('installPrompt').classList.remove('show');
+        }
+
+        // Local Storage Management
+        function loadFromStorage() {
+            const stored = localStorage.getItem('profiles');
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveToStorage(profiles) {
+            localStorage.setItem('profiles', JSON.stringify(profiles));
+        }
+
+        let profiles = loadFromStorage();
+        let currentProfile = null;
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            if (sectionId === 'saved') {
+                displaySavedProfiles();
+            }
+        }
+
+        function toggleCheckbox(element) {
+            element.classList.toggle('checked');
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+            }
+        }
+
+        function selectRadio(element, groupName, value) {
+            document.querySelectorAll(`input[name="${groupName}"]`).forEach(radio => {
+                radio.closest('.radio-item').classList.remove('selected');
+            });
+            element.classList.add('selected');
+            element.querySelector('input').checked = true;
+        }
+
+        function saveProfile() {
+            const fullName = document.getElementById('fullName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            
+            if (!fullName || !birthDate) {
+                showNotification('لطفاً نام و تاریخ تولد را وارد کنید', 'error');
+                return;
+            }
+
+            const gender = document.querySelector('input[name="gender"]:checked')?.value || '';
+            
+            const diseases = [];
+            document.querySelectorAll('.checkbox-item.checked input[type="checkbox"]').forEach(checkbox => {
+                const label = checkbox.nextElementSibling?.textContent || checkbox.id;
+                diseases.push(label);
+            });
+
+            const profile = {
+                id: Date.now(),
+                fullName,
+                birthDate,
+                gender,
+                diseases,
+                createdAt: new Date().toISOString()
+            };
+
+            profiles.push(profile);
+            currentProfile = profile;
+            saveToStorage(profiles);
+            
+            updateProfileSummary(profile);
+            showNotification('پروفایل با موفقیت ذخیره شد ✅', 'success');
+            
+            setTimeout(() => {
+                showSection('saved');
+            }, 1500);
+        }
+
+        function updateProfileSummary(profile) {
+            document.getElementById('userName').textContent = profile.fullName;
+            const age = calculateAge(profile.birthDate);
+            document.getElementById('healthStatus').textContent = `${age} ساله - عالی`;
+        }
+
+        function calculateAge(birthDate) {
+            const today = new Date();
+            const birth = new Date(birthDate);
+            let age = today.getFullYear() - birth.getFullYear();
+            const monthDiff = today.getMonth() - birth.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        function displaySavedProfiles() {
+            const container = document.getElementById('savedProfilesList');
+            
+            if (profiles.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">هنوز هیچ پروفایلی ذخیره نشده است</p>';
+                return;
+            }
+
+            container.innerHTML = profiles.map(profile => {
+                const age = calculateAge(profile.birthDate);
+                const isActive = currentProfile?.id === profile.id;
+                return `
+                    <div class="profile-item ${isActive ? 'profile-item-active' : ''}" onclick="loadProfile(${profile.id})">
+                        <button class="delete-profile" onclick="event.stopPropagation(); deleteProfile(${profile.id})">×</button>
+                        <h3>👤 ${profile.fullName}</h3>
+                        <p>📅 سن: ${age} سال</p>
+                        <p>🏥 بیماری‌ها: ${profile.diseases.length > 0 ? profile.diseases.join('، ') : 'ندارد'}</p>
+                        <p style="font-size: 12px; color: #666;">ذخیره شده: ${new Date(profile.createdAt).toLocaleDateString('fa-IR')}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadProfile(profileId) {
+            const profile = profiles.find(p => p.id === profileId);
+            if (!profile) return;
+
+            currentProfile = profile;
+            
+            document.getElementById('fullName').value = profile.fullName;
+            document.getElementById('birthDate').value = profile.birthDate;
+            
+            document.querySelectorAll('input[name="gender"]').forEach(radio => {
+                radio.checked = radio.value === profile.gender;
+                if (radio.checked) {
+                    radio.closest('.radio-item').classList.add('selected');
+                } else {
+                    radio.closest('.radio-item').classList.remove('selected');
+                }
+            });
+
+            document.querySelectorAll('.checkbox-item').forEach(item => {
+                item.classList.remove('checked');
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                if (checkbox) checkbox.checked = false;
+            });
+
+            profile.diseases.forEach(disease => {
+                const checkbox = Array.from(document.querySelectorAll('.checkbox-item input[type="checkbox"]'))
+                    .find(cb => cb.nextElementSibling?.textContent === disease);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    checkbox.closest('.checkbox-item').classList.add('checked');
+                }
+            });
+
+            updateProfileSummary(profile);
+            showNotification(`پروفایل ${profile.fullName} بارگذاری شد`, 'success');
+            showSection('profile');
+        }
+
+        function deleteProfile(profileId) {
+            if (confirm('آیا مطمئن هستید که می‌خواهید این پروفایل را حذف کنید؟')) {
+                profiles = profiles.filter(p => p.id !== profileId);
+                saveToStorage(profiles);
+                if (currentProfile?.id === profileId) {
+                    currentProfile = null;
+                    clearForm();
+                }
+                displaySavedProfiles();
+                showNotification('پروفایل حذف شد', 'success');
+            }
+        }
+
+        function clearForm() {
+            document.getElementById('fullName').value = '';
+            document.getElementById('birthDate').value = '';
+            document.querySelectorAll('.radio-item').forEach(item => item.classList.remove('selected'));
+            document.querySelectorAll('.checkbox-item').forEach(item => item.classList.remove('checked'));
+            document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
+            currentProfile = null;
+            document.getElementById('userName').textContent = 'کاربر محترم';
+            document.getElementById('healthStatus').textContent = 'عالی';
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = type === 'error' ? '#f44336' : '#4CAF50';
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function changeWaterCount(delta) {
+            const input = document.getElementById('waterCount');
+            let value = parseInt(input.value) || 0;
+            value = Math.max(0, Math.min(20, value + delta));
+            input.value = value;
+        }
+
+        function markCompleted(button) {
+            const reminderBox = button.closest('.reminder-box');
+            reminderBox.classList.add('reminder-active');
+            button.remove();
+            const title = reminderBox.querySelector('h4');
+            title.textContent = title.textContent.replace('⏰ یادآور فعال', '✅ انجام شده');
+            showNotification('فعالیت با موفقیت ثبت شد', 'success');
+        }
+
+        function emergency() {
+            if (confirm('آیا می‌خواهید تماس اضطراری برقرار شود؟')) {
+                showNotification('در حال تماس با خدمات اورژانس... 🚨', 'error');
+            }
+        }
+
+        function showActivity(activity) {
+            showNotification(`جزئیات فعالیت: ${activity}`, 'success');
+        }
+
+        function startRelaxation(type) {
+            showNotification(`تمرین آرامش ${type} شروع شد`, 'success');
+        }
+
+        function addToMyPlan(meal) {
+            showNotification(`${meal} به برنامه غذایی شما اضافه شد`, 'success');
+        }
+
+        // Load profiles on start
+        window.addEventListener('load', () => {
+            if (profiles.length > 0) {
+                displaySavedProfiles();
+            }
+        });
+    </script>
+</body>
+</html>
